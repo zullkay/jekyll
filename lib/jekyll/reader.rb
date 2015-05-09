@@ -35,22 +35,9 @@ module Jekyll
       dot_pages = dot_files.select{ |file| Utils.has_yaml_header?(@site.in_source_dir(base,file)) }
       dot_static_files = dot_files - dot_pages
 
-      retrieve_posts(dir)
       retrieve_dirs(base, dir, dot_dirs)
       retrieve_pages(dir, dot_pages)
       retrieve_static_files(dir, dot_static_files)
-    end
-
-    # Retrieves all the posts(posts/drafts) from the given directory
-    # and add them to the site and sort them.
-    #
-    # dir - The String representing the directory to retrieve the posts from.
-    #
-    # Returns nothing.
-    def retrieve_posts(dir)
-      site.posts.concat(PostReader.new(site).read(dir))
-      site.posts.concat(DraftReader.new(site).read(dir)) if site.show_drafts
-      site.posts.sort!
     end
 
     # Recursively traverse directories with the read_directories function.
